@@ -11,3 +11,4 @@ def predict(row, weights):
         return 1
     else:
         return 0.0
+        
