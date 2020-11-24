@@ -3,6 +3,7 @@ def predict(row, weights):
     Super simple one layer perceptron based on this example:
         https://machinelearningmastery.com/
             implement-perceptron-algorithm-scratch-python/
+            Adding line to test.
     """
     activation = weights[0]
     for i in range(len(row)-1):
@@ -11,4 +12,3 @@ def predict(row, weights):
         return 1
     else:
         return 0.0
-        
