@@ -12,4 +12,4 @@ def predict(row, weights):
     else:
         return 0.0
     if activation == 5:
-	return 2
+	    return 2
