@@ -1,0 +1,24 @@
+there is a sql database that can be downloaded from: https://drive.google.com/drive/folders/1zzVzLvzXFYihVyTQaouIEuWMAMf57emY
+
+sql tables/joining:
+script has project_id and script_id
+project has p_id and metadata
+block has script_id and block info
+
+will first create a small sample from each that has 500 and 1000 matching project ids, outer joined
+
+SQL code to do above is:
+
+create table project_sample like project;
+insert into project_sample
+select *
+from project
+order by rand()
+limit 1000;
+
+select * from script
+inner join project_sample on project_sample.p_ID=script.project_ID
+inner join block on block.Script_ID=script.script_ID;
+
+
+another note: the sql code above can be used to remove duplicate script and project IDs, and also teh "param*" columns, since they will not be needed for this analysis. 
