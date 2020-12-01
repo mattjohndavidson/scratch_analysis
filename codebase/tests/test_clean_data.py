@@ -2,7 +2,7 @@ import os
 import unittest
 import pandas as pd
 import numpy as np
-import clean_data
+#import clean_data
 
 #print(clean_data.__path__)
 data_path = "data/"
