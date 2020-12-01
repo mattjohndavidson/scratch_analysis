@@ -15,7 +15,6 @@ class test_clean_data(unittest.TestCase):
         Testing the cleaning of column names
         """
         self.assertTrue(True)
-        
  #       df = pd.read_csv(os.path.join(data_path, 'project_db_1000.csv'))
   #      df_clean = clean_data.clean_data(df)
   #      dataset = df_clean.columns
