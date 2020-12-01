@@ -3,12 +3,12 @@ import numpy as np
 
 def clean_data(data):
     #replacing dashes with underscores
-    dat.columns = [i.replace('-', '_') for i in dat.columns]
+    data.columns = [i.replace('-', '_') for i in data.columns]
 
     #removing redundant columns
-    dat = dat.drop(columns=['Script_ID','p_ID'])
+    data = data.drop(columns=['Script_ID','p_ID'])
 
     #remove unnecessary columns
-    dat = dat[dat.columns[~dat.columns.str.contains('param')]]
+    data = data[data.columns[~data.columns.str.contains('param')]]
 
-    return(dat)
+    return(data)
