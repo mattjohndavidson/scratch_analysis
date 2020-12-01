@@ -4,7 +4,7 @@ Module with single function to clean data file
 
 def clean_data(data):
     """
-    Cleans up data file for further processing.
+    Cleans up data file for further processing. 
     """
 
     #replacing dashes with underscores
