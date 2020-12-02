@@ -2,7 +2,11 @@
 Module with single function to clean data file
 """
 
-def clean_data(data):
+#will add a function to get data file from gdrive
+
+#will add a function to "flatten" data so that there is one row per project
+
+def clean_columns(data):
     """
     Cleans up data file for further processing. 
     """
