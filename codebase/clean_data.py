@@ -22,10 +22,10 @@ def clean_columns(data):
     data.columns = [i.replace('-', '_') for i in data.columns]
 
     #removing redundant columns
-    data = data.drop(columns=['Script_ID', 'p_ID'])
+    data = data.drop(columns=['project_ID.1','Script_ID','p_ID'])
 
     #remove unnecessary columns
     data = data[data.columns[~data.columns.str.contains('param')]]
-    data = data.drop(columns=['sprite_type','sprite_name','script_rank','coordinates','username','project_ID.1','Script_ID','p_ID'])
+    data = data.drop(columns=['sprite_type','sprite_name','script_rank','coordinates','username'])
 
     return data
