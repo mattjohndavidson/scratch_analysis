@@ -6,5 +6,5 @@ Serves as a placeholder so other components can call.
 """
 
 def get_data():
-    dat = pd.read_csv('data/project_db_1000.csv',low_memory=False)
-    return dat
+    data = pd.read_csv('data/project_db_1000.csv',low_memory=False)
+    return data
