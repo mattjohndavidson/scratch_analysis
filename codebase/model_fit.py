@@ -28,13 +28,12 @@ rf = RandomForestRegressor(n_estimators = 100, random_state = 42) # Train the mo
 model = MultiOutputRegressor(estimator=rf)
 model.fit(train_features, train_labels)
 
-#add feature names to model
-model.feature_names = list(train_features.columns.values)
 #optional scoring checks
 #train_score = model.score(train_features, train_labels)
 #print("Training score:", train_score)
 #test_score = model.score(test_features, test_labels)
 #print("Test score:", test_score)
 
-# export fitted model
-joblib.dump(model,'fitted_model.sav')
+# export fitted model & feature list
+joblib.dump(model,'exports/fitted_model.sav')
+joblib.dump(feature_list,'exports/feature_list.sav')
