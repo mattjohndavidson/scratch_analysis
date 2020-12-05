@@ -21,7 +21,7 @@ def get_feature_graph(label):
     """
     Creates a graph of feature importance based on passed in label
     """
-    feature_imps = pd.DataFrame(model.estimators_[label].feature_importances_*100,columns=["Importance"]),index=col_names)
+    feature_imps = pd.DataFrame(model.estimators_[label].feature_importances_*100,columns=["Importance"],index=model.feature_names)
     feature_imps = feature_imps.sort_values("Importance", ascending=False)
 
     fig_features_importance = go.Figure()
