@@ -8,9 +8,7 @@ from read_data import get_data
 import clean_data
 
 data = get_data()
-
 data_clean = clean_data.clean_columns(data)
-
 data_clean_flat = clean_data.flatten_data(data_clean)
 
 #drop additional unnecessary columns
@@ -18,8 +16,9 @@ data_use = data_clean_flat.drop(columns=['project_ID','script_ID','project_name'
 
 #create outcome variables (called "labels") and predictors (called "features")
 labels = np.array(data_use[['total_remixes','total_views', 'total_favorites', 'total_loves']])
-featres = np.array(data_use.drop(columns=['total_remixes', 'total_views', 'total_favorites', 'total_loves']))
+features = data_use.drop(columns=['total_remixes', 'total_views', 'total_favorites', 'total_loves'])
 feature_list = np.array(features.columns)
+features = np.array(features)
 
 # create test and training datasets
 train_features, test_features, train_labels, test_labels = train_test_split(features, labels, test_size = 0.25, random_state = 42)
@@ -29,6 +28,8 @@ rf = RandomForestRegressor(n_estimators = 100, random_state = 42) # Train the mo
 model = MultiOutputRegressor(estimator=rf)
 model.fit(train_features, train_labels)
 
+#add feature names to model
+model.feature_names = list(train_features.columns.values)
 #optional scoring checks
 #train_score = model.score(train_features, train_labels)
 #print("Training score:", train_score)
