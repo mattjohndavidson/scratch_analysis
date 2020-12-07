@@ -1,3 +1,5 @@
+import pandas as pd
+
 """
 Module with functions to clean data file
 """
