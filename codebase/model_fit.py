@@ -6,6 +6,7 @@ from sklearn.multioutput import MultiOutputRegressor
 from sklearn.model_selection import train_test_split
 from read_data import get_data
 import clean_data
+import os
 
 data = get_data()
 data_clean = clean_data.clean_columns(data)
@@ -35,5 +36,8 @@ model.fit(train_features, train_labels)
 #print("Test score:", test_score)
 
 # export fitted model & feature list
-joblib.dump(model,'exports/fitted_model.sav')
-joblib.dump(feature_list,'exports/feature_list.sav')
+dirname = os.path.dirname(__file__)
+filename_model = os.path.join(dirname, 'exports/fitted_model.sav')
+filename_features = os.path.join(dirname, 'exports/feature_list.sav')
+joblib.dump(model,filename_model)
+joblib.dump(feature_list,filename_features)
