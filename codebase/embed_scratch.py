@@ -1,13 +1,9 @@
 import pandas as pd
 import numpy as np
-import joblib
-import plotly.express as px
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-#import dash_daq as dash_daq
 from dash.dependencies import Input, Output, State
-import os
 import clean_data as cdt
 import search
 
@@ -25,11 +21,6 @@ removed_columns = np.array(['script_ID','project_ID','project_name','is_remix','
 
 columns = np.setdiff1d(data.columns.values,removed_columns)
 block_types = np.setdiff1d(np.array(merged.columns.values),np.array(data.columns.values))
-
-# block_options = {}
-# for col in columns:
-#     block_options[col] = []
-# block_options['block_type'] = block_types
 
 # begin app
 app = dash.Dash(__name__)
@@ -64,10 +55,6 @@ app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-fami
     ),
         
     dcc.Checklist(id='block-checklist'),
-
-#         options = [{'label': block, 'value': block} for block in block_types],
-#         labelStyle={'display': 'inline-block'}
-#     ),
         
     html.Button(id='search-button', n_clicks=0, children='Search'),
         
@@ -75,9 +62,15 @@ app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-fami
         
     html.H2('Search result:'),
 
-    html.Div(id='output-url'),
+    html.A(id='output-url',children='Project source code',target='_blank'),
         
-    html.Button(id='search-update', n_clicks=0, children='Update')
+    html.Iframe(
+        id='scratch',
+        style={'border': 'none', 'width': '100%', 'height': 500},
+        src='https://scratch.mit.edu/projects/98698671/embed'
+    ),
+        
+    html.Button(id='update-button', n_clicks=0, children='Update')
 ])
 
 
@@ -93,23 +86,33 @@ def set_block_options(selected_search):
     return block_options
 
 
-# @app.callback(
-#     Output('block-checklist', 'value'),
-#     Input('block-checklist', 'options')),
-# def set_block_values(available_options):
-#     return available_options[0]['value']
+@app.callback(
+    Output('output-url', 'href'),
+    Output('scratch', 'src'),
+    Input('search-button', 'n_clicks'),
+    Input('update-button', 'n_clicks'),
+    State('search-dropdown', 'value'),
+    State('block-checklist', 'value'))
+def update_scratch(search_clicks, update_clicks, input1, input2):
+    clicked_button = [p['prop_id'] for p in dash.callback_context.triggered][0]
+    sorted_data = search.search_data(data, input1, input2)
+    
+    if 'search-button' in clicked_button:
+        p_id = sorted_data.iloc[0].project_ID
+    elif 'update-button' in clicked_button:
+        p_id = sorted_data.iloc[update_clicks].project_ID
+    
+    href = 'https://scratch.mit.edu/projects/{}/editor/'.format(p_id)
+    src = 'https://scratch.mit.edu/projects/{}/embed'.format(p_id)
+
+    return href, src
 
 
 @app.callback(
-    Output('output-url','children'),
-    Input('search-button', 'n_clicks'),
-    State('search-dropdown', 'value'),
-    State('block-checklist', 'value'))
-def update_scratch(n_clicks, input1, input2):
-    sorted_data = search.search_data(data, input1, input2)
-    p_id = sorted_data.iloc[0].project_ID
-    
-    return u'Project URL: https://scratch.mit.edu/projects/{}'.format(p_id)
+    Output('update-button', 'n_clicks'),
+    Input('search-button', 'n_clicks'))
+def reset_update(n_clicks):
+    return 0
 
 
 if __name__ == '__main__':
