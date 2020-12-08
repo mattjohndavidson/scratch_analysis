@@ -3,6 +3,7 @@ import unittest
 import pandas as pd
 import numpy as np
 from codebase import clean_data
+from codebase import search
 
 #print(clean_data.__path__)
 data_path = "data/"
