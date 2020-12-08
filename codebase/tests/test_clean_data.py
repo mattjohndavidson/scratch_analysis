@@ -26,11 +26,11 @@ class test_clean_data(unittest.TestCase):
     #test that all '-' have been converted to '_'
     #test that all columns to be removed have been removed
     
-   def test_flatten_data(self):
+    def test_flatten_data(self):
        """
        Tests the flatten data function.
        """
-       
+       pass
        #write tests to get the number of unique project ids in the initial data
        #verify that n_rows of flat data == count of unique ids
        #ensure that the ncol == max(num_rows of initial data), but probably minus count of unique ids
