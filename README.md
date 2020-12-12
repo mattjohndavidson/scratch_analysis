@@ -19,11 +19,12 @@ They are also able to explore which coding features are important in popular pro
 ### Example Users
 1. A middle school CS teacher is looking for examples of Scratch projects that illustrate various programming aspects well to show as an example in class. She doesn’t want to search through individual projects and assess each one to find suitable projects. She would like to use a simple search function to find potential projects.
 
-Our tool allows her to search through the Scratch dataset to locate relevant projects. If the project is still hosted on Scratch, the project is directly displayed and she can simply view it within our tool. The source code for the project is also linked.
-
 2. A researcher has found the scraped Scratch project repository and wants to use it to understand what kinds of Scratch projects get the most views, favorites, loves, or remixes. However, the data file is too large to be opened in Excel, and he doesn’t have any experience using other tools like Python to examine the data. He would like to see what features are important in popular Scratch projects.
 
-Our tool analyzes the dataset to determine the top ten features popular projects usually have. We display the results using a graphic that also indicates each feature's importance.
+
+Our tool allows users to search through the Scratch dataset to locate relevant projects. If the project is still hosted on Scratch, the project is directly displayed and can be viewed within our tool. The source code for the project is also linked. 
+
+Our tool also analyzes the dataset to determine the top ten features popular projects usually contain. The results, along with each feature's importance, are visually displayed.
 
 ## Demonstration
 Add video here
