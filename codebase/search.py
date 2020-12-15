@@ -8,7 +8,7 @@ def search_data(data, column, block_search=np.array([None])):
 
     Params
     --------
-    data: pandas dataframe cleaned with clean_data.py
+    data: pandas dataframe with data from scratch_analysis.csv
     column: column to sort by
     block_type: if column = block_type, block_type defines which block_types
                 to include in the search, default is None
@@ -28,32 +28,39 @@ def search_data(data, column, block_search=np.array([None])):
     else:
         pass
 
-    popularity_grades = data.groupby('project_ID').first()
-    blocks_flattened = data.groupby(['project_ID'])['block_type'].value_counts().unstack(fill_value=0).reset_index()
-    merged = popularity_grades.merge(blocks_flattened, left_on='project_ID',
-                                     right_on='project_ID', how='left')
+    REMOVED_COLUMNS = np.array(['p_ID', 'project_name', 'CustomBlocks',
+                                'is_remix', 'Clones'])
 
-    removed_columns = np.array(['script_ID', 'project_ID', 'project_name',
-                                'is_remix', 'block_rank', 'Clones', 'InstancesSprites'])
-    columns = np.setdiff1d(data.columns.values, removed_columns)
-    block_types = np.setdiff1d(np.array(merged.columns.values), np.array(data.columns.values))
+    ALL_SEARCH_COLUMNS = np.append(
+                            np.setdiff1d(data.columns.values, REMOVED_COLUMNS),
+                            ['block-type'])
 
-    if column not in columns:
-        raise ValueError('Bad input. column must be a column of the dataframe.')
-    elif column == 'block_type':
+    NON_BLOCK_COLUMNS = np.array(['total-views', 'total-remixes',
+                                  'total-favorites', 'total-loves',
+                                  'Abstraction', 'Parallelism',
+                                  'Logic', 'Synchronization',
+                                  'FlowControl', 'UserInteractivity',
+                                  'DataRepresentation', 'Mastery',
+                                  'total-blocks', 'block-type'])
+
+    BLOCK_TYPES = np.setdiff1d(ALL_SEARCH_COLUMNS, NON_BLOCK_COLUMNS)
+
+    if column not in NON_BLOCK_COLUMNS:
+        raise ValueError('Bad input. Column must be a search parameter.')
+    elif column == 'block-type':
         if block_search is None or len(block_search) == 0:
             raise ValueError('Bad input. To search by block type, input a block type to search.')
-        elif not all(block in block_types for block in block_search):
-            raise ValueError('Bad input. Must search by valid block_type values.')
+        elif not all(block in BLOCK_TYPES for block in block_search):
+            raise ValueError('Bad input. Must search by valid block type values.')
         elif len(block_search) == 1:
             search_term = block_search[0]
         else:
-            block_search_sum = sum([merged[block] for block in block_search])
-            merged.insert(len(merged.columns), "search_sum", block_search_sum)
+            block_search_sum = sum([data[block] for block in block_search])
+            data.insert(len(data.columns), "search_sum", block_search_sum)
             search_term = 'search_sum'
     else:
         search_term = column
 
-    sorted_data = merged.sort_values(search_term, ascending=False)
+    sorted_data = data.sort_values(search_term, ascending=False)
 
     return sorted_data

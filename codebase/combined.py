@@ -16,7 +16,8 @@ import joblib
 
 
 # Load the data
-data = cdt.clean_columns(pd.read_csv('data/project_db_1000.csv', low_memory=False))
+file_name = 'data/scratch_data.csv'
+data = pd.read_csv(file_name, low_memory=False).drop(columns=['Unnamed: 0'])
 
 dirname = os.path.dirname(__file__)
 filename_model = os.path.join(dirname, 'exports/fitted_model.sav')
@@ -24,16 +25,20 @@ filename_features = os.path.join(dirname, 'exports/feature_list.sav')
 model = joblib.load(filename_model)
 feature_list = joblib.load(filename_features)
 
-popularity_grades = data.groupby('project_ID').first()
-blocks_flattened = data.groupby(['project_ID'])['block_type'].value_counts().unstack(fill_value=0).reset_index()
-merged = popularity_grades.merge(blocks_flattened,
-                                 left_on='project_ID', right_on='project_ID', how='left')
-removed_columns = np.array(['script_ID', 'project_ID', 'project_name',
-                            'is_remix', 'block_rank', 'Clones', 'InstancesSprites'])
+removed_columns = np.array(['p_ID', 'project_name', 'CustomBlocks',
+                            'is_remix', 'Clones'])
 
+all_search_columns = np.setdiff1d(data.columns.values, removed_columns)
 
-columns = np.setdiff1d(data.columns.values, removed_columns)
-block_types = np.setdiff1d(np.array(merged.columns.values), np.array(data.columns.values))
+non_block_columns = np.array(['total-views', 'total-remixes',
+                              'total-favorites', 'total-loves',
+                              'Abstraction', 'Parallelism',
+                              'Logic', 'Synchronization',
+                              'FlowControl', 'UserInteractivity',
+                              'DataRepresentation', 'Mastery',
+                              'total-blocks'])
+
+block_types = np.setdiff1d(all_search_columns, non_block_columns)
 
 # begin app
 app = dash.Dash(__name__)
@@ -53,12 +58,12 @@ app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-fami
                           dcc.Dropdown(
                               id='search-dropdown',
                               options=[
-                                  {'label': 'Total blocks', 'value': 'total_blocks'},
-                                  {'label': 'Total remixes', 'value': 'total_remixes'},
-                                  {'label': 'Total views', 'value': 'total_views'},
-                                  {'label': 'Total favorites', 'value': 'total_favorites'},
-                                  {'label': 'Total loves', 'value': 'total_loves'},
-                                  {'label': 'Block type', 'value': 'block_type'},
+                                  {'label': 'Total blocks', 'value': 'total-blocks'},
+                                  {'label': 'Total remixes', 'value': 'total-remixes'},
+                                  {'label': 'Total views', 'value': 'total-views'},
+                                  {'label': 'Total favorites', 'value': 'total-favorites'},
+                                  {'label': 'Total loves', 'value': 'total-loves'},
+                                  {'label': 'Block type', 'value': 'block-type'},
                                   {'label': 'Abstraction', 'value': 'Abstraction'},
                                   {'label': 'Parallelism', 'value': 'Parallelism'},
                                   {'label': 'Logic', 'value': 'Logic'},
@@ -68,7 +73,7 @@ app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-fami
                                   {'label': 'Data representation', 'value': 'DataRepresentation'},
                                   {'label': 'Mastery', 'value': 'Mastery'},
                                   ],
-                              value='total_blocks'
+                              value='total-blocks'
                               ),
 
                           dcc.Checklist(id='block-checklist'),
@@ -137,9 +142,9 @@ def update_scratch(search_clicks, update_clicks, input1, input2):
     sorted_data = search.search_data(data, input1, input2)
 
     if 'search-button' in clicked_button:
-        p_id = sorted_data.iloc[0].project_ID
+        p_id = sorted_data.iloc[0].p_ID
     elif 'update-button' in clicked_button:
-        p_id = sorted_data.iloc[update_clicks].project_ID
+        p_id = sorted_data.iloc[update_clicks].p_ID
 
     href = 'https://scratch.mit.edu/projects/{}/editor/'.format(p_id)
     src = 'https://scratch.mit.edu/projects/{}/embed'.format(p_id)
