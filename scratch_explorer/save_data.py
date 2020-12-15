@@ -5,21 +5,31 @@ from https://drive.google.com/drive/folders/12L-ot-zOde35hViINe9wzTl9DkVTtDCs
 parses the data needed to run scratch_analysis and saves it as scratch_data.csv
 in the data folder. The user does not need to run this module.
 """
+import sys
 import os.path as op
 import pandas as pd
 import numpy as np
 
 
-def save_data():
+def save_data(local_path_meta, local_path_code, file_out_path):
     """
     Creates scratch_data.csv
     """
-    local_path_meta = '/Users/jacobcohen/Downloads/metadata.csv' #(31.2 MB)
-    local_path_code = '/Users/jacobcohen/Downloads/code.csv' #(3.76 GB)
-    file_out_path = 'scratch_data.csv'
-
-    df = pd.read_csv(local_path_code)
-    metadata = pd.read_csv(local_path_meta)
+    paths = [local_path_meta, local_path_code, file_out_path]
+    if not all(path.endswith('.csv') for path in paths):
+        raise ValueError('Files must be csv files.')
+    
+    URL = 'https://drive.google.com/drive/folders/12L-ot-zOde35hViINe9wzTl9DkVTtDCs'
+    try:
+        df = pd.read_csv(local_path_code)
+    except OSError as e:
+        print(e)
+        sys.exit('Download code.csv from {}'.format(URL))
+    try:
+        metadata = pd.read_csv(local_path_meta)
+    except OSError as e:
+        print(e)
+        sys.exit('Download metadata.csv from {}'.format(URL))
 
     projects = df.groupby('p_ID')['block-type'].value_counts().unstack(fill_value=0).reset_index()
     projects.columns.name = None
@@ -48,5 +58,34 @@ def save_data():
     merged.to_csv(file_out_path)
 
 
+def main():
+    """Runs save_data().
+    
+    My example usage:
+        python save_data.py /Users/jacobcohen/Downloads/metadata.csv \
+        /Users/jacobcohen/Downloads/code.csv data/scratch_data.csv
+    """
+    if not len(sys.argv) == 4:
+        sys.exit('Usage: python save_data.py <metadata.csv path> <code.csv path> <scratch_data.csv path>')
+    else:
+        local_path_meta = sys.argv[1]
+        local_path_code = sys.argv[2]
+        file_out_path = sys.argv[3]
+
+        if op.exists(file_out_path):
+            need_input = True
+            while need_input:
+                ans = input('File {} already exists. Do you want to overwrite (y/n)?'.format(file_out_path))
+                if ans == 'n':
+                    need_input == False
+                    sys.exit(0)
+                elif ans == 'y':
+                    need_input == False
+                else:
+                    pass
+
+        save_data(local_path_meta, local_path_code, file_out_path)
+
+
 if __name__== "__main__":
-    save_data()
+    main()
