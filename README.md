@@ -31,10 +31,22 @@ Our tool also analyzes the dataset to determine the top ten features popular pro
 Add video here
 
 ## Installation
-Add instructions here
+To install and run this explorer :
+1. Install conda.
+2. Clone the repository using: git clone https://github.com/mattjohndavidson/scratch_analysis.git
+3. Create an environment for the app by using: conda env create -f environment.yml
+4. Run the environment using: source activate test_env
+5. ...
+6. Run the website on your local machine by using: python app.py
+7. ...
+
 
 ## Limitations
-Some Scratch projects are no longer available on the website.
+There are some limitiation to this project:
+- Some Scratch projects are no longer available on the website.
+- The app runs locally at the user's machine and is not hosted by cloud server
+
+
 
 ## Notes
 To be updated
