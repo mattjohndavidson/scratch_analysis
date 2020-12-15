@@ -1,7 +1,7 @@
 # Scratch Explorer
 [![Build Status](https://travis-ci.com/mattjohndavidson/scratch_analysis.svg?branch=main)](https://travis-ci.com/github/mattjohndavidson/scratch_analysis)
 [![Coverage Status](https://coveralls.io/repos/github/mattjohndavidson/scratch_analysis/badge.svg?branch=main)](https://coveralls.io/github/mattjohndavidson/scratch_analysis?branch=main)
-![scratch-og](https://user-images.githubusercontent.com/56270805/102168094-81b8c400-3e44-11eb-8b5f-99d0947161a9.png)
+![videogames_48_37](https://user-images.githubusercontent.com/56270805/102248582-29baa580-3eb6-11eb-8b7f-d34037d3ad51.jpg)
 
 ## About Scratch
 Scratch is a block-based visual programming language. 
