@@ -7,9 +7,13 @@ class test_save_data(unittest.TestCase):
     """Includes unit tests for save_data.py"""
     
     def test1(self):
-        """Input is not a csv file"""
+        """one input is not a csv file"""
         with self.assertRaises(ValueError):
-            save_data.save_data('metadata', 'code', 'ouput')
+            save_data.save_data('metadata.csv', 'code.csv', 'ouput')
+            
+#     def test2(self):
+#         """metadata.csv does not exist"""
+        
 
 
 if __name__ == '__main__':

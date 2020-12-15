@@ -6,6 +6,8 @@ parses the data needed to run scratch_analysis and saves it as scratch_data.csv
 in the data folder. The user does not need to run this module.
 """
 import sys
+import errno
+import os
 import os.path as op
 import pandas as pd
 import numpy as np
@@ -20,16 +22,15 @@ def save_data(local_path_meta, local_path_code, file_out_path):
         raise ValueError('Files must be csv files.')
     
     URL = 'https://drive.google.com/drive/folders/12L-ot-zOde35hViINe9wzTl9DkVTtDCs'
-    try:
-        df = pd.read_csv(local_path_code)
-    except OSError as e:
-        print(e)
-        sys.exit('Download code.csv from {}'.format(URL))
-    try:
-        metadata = pd.read_csv(local_path_meta)
-    except OSError as e:
-        print(e)
-        sys.exit('Download metadata.csv from {}'.format(URL))
+    if not op.exists(local_path_meta):
+        e_message = 'Download metadata.csv from\n{}\n'.format(URL) + os.strerror(errno.ENOENT)
+        raise FileNotFoundError(errno.ENOENT, e_message, local_path_meta)
+    if not op.exists(local_path_code):
+        e_message = 'Download code.csv from\n{}\n'.format(URL) + os.strerror(errno.ENOENT)
+        raise FileNotFoundError(errno.ENOENT, e_message, local_path_code)
+
+    df = pd.read_csv(local_path_code)
+    metadata = pd.read_csv(local_path_meta)
 
     projects = df.groupby('p_ID')['block-type'].value_counts().unstack(fill_value=0).reset_index()
     projects.columns.name = None
