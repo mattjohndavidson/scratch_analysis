@@ -43,8 +43,9 @@ app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-fami
                           # title
                           html.H1("Scratch Analysis"),
                           html.Br(),
-
-                          html.H2("1.Search for scratch projects that fit your needs!"),
+                          dcc.Tabs([
+                              dcc.Tab(label = "Search Function", children = [
+                                                          html.H2("1.Search for scratch projects that fit your needs!"),
 
                           html.H3('Search metric:'),
 
@@ -86,9 +87,12 @@ app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-fami
                               src='https://scratch.mit.edu/projects/98698671/embed'
                               ),
 
-                          html.Button(id='update-button', n_clicks=0, children='Update'),
-                          html.Br(),
-                          html.H2("2.See which features were most predictive of the chosen popularity metric"),
+                          html.Button(id='update-button', n_clicks=0, children='Update')
+                              ]),
+                          
+
+                          dcc.Tab(label = "popularity metric", children = [
+html.H2("2.See which features were most predictive of the chosen popularity metric"),
 
                           #dropdown menu to choose feature importance graph based on one of 4 labels
                           dcc.Dropdown(
@@ -103,6 +107,8 @@ app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-fami
                               ),
 
                           dcc.Graph(id='figure_importances')
+                          ]),
+                          ]),
                           ]
                       )
 
