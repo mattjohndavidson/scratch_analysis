@@ -44,12 +44,14 @@ class test_rf_regression(unittest.TestCase):
             data = data_modeling
             model_fit.prepare_data(data)
 
+        with self.assertIsInstance(model, 'sklearn.multioutput.MultiOutputRegressor', 
+        'model object not multi output regressor')
+            data = data_modeling
+            model_fit.fit_model(data)
 
-            #check for model object instantiation, of the correct type
-        # RF regresssion + multioutput
+        with self.assertTrue(diagnostics, 'diagnostics not created')
+            
     
-        #ensure that diagnostics not empty
-
     def test_file_export(Self):
         """
         Test that module writes files
@@ -59,11 +61,15 @@ class test_rf_regression(unittest.TestCase):
         filename_features = os.path.join(dirname, 'exports/feature_list.sav')
         filename_diagnostics = os.path.join(dirname, 'exports/diagnostics.sav')
         
-        with self.assertTrue(os.path.isfile(filename_model))
+        with self.assertTrue(os.path.isfile(filename_model),
+        'model object not written to disk')
         #check that model exists
 
-        with self.assertTrue(os.path.isfile(filename_features))
+
+        with self.assertTrue(os.path.isfile(filename_features),
+        'features list not written to disk')
         #check that features list exist
 
-        with self.assertTrue(os.path.isfile(filename_diagnostics))
+        with self.assertTrue(os.path.isfile(filename_diagnostics),
+        'model diagnostics not written to disk')
         #check that diagnostics file exists

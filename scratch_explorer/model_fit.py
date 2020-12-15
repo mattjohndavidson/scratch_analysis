@@ -48,26 +48,22 @@ def fit_model(data):
     model.fit(train_features, train_labels)
 
     #create diagnostics
-    """
     train_score = model.score(train_features, train_labels)
     test_score = model.score(test_features, test_labels)
-    return train_score, test_score
-
-    #get the avg for each pop metric as baselines for base line errors
-    # out of model scoring fit, also out of model prediction
-    # for each pop metric
-    #'total_remixes','total_views', 'total_favorites', 'total_loves'
-    # 0                  1               2                   3
-    # The baseline predictions are the historical averages
-    #baseline_preds = test_features[:, feature_list.index('average')]
-    # Baseline errors, and display average baseline error
-    #baseline_errors = abs(baseline_preds - test_labels)
-    # Use the forest's predict method on the test data
-    #predictions = rf.predict(test_features)
-    # Calculate the absolute errors
-    #errors = abs(predictions - test_labels)
-    #add nrow for number of projects used for test/train etc
-    """
+    
+    #get the average for each popularity metric as baselines
+    baseline_predictions = ([test_labels[0].mean(), test_labels[1].mean(), test_labels[2].mean(),
+                             test_labels[3].mean()])
+    baseline_errors = abs(baseline_predictions - test_labels)
+    predictions = rf.predict(test_features)
+    errors = abs(predictions - test_labels)
+    observations = test_features.shape[0]
+    
+    diagnostics = {'train_score': train_score,
+                   'test_score': test_score,
+                   'baseline_error': baseline_errors.mean(),
+                   'test_error': errors.mean(),
+                   'observations': observations}
     return feature_list, model, diagnostics
 
 def export_files(model, feature_list, diagnostics):
