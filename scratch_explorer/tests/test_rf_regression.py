@@ -14,7 +14,7 @@ class test_rf_regression(unittest.TestCase):
     def setUp(self):
         # getting paths to data file
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'data/scratch_sample.csv')
+        filename = os.path.join(dirname,'..','data/scratch_sample.csv')
 
         self.data_modeling = pd.read_csv(filename)
 

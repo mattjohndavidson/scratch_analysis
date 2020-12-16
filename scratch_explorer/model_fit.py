@@ -28,14 +28,10 @@ def fit_model(data):
     diagnostics: various diagnostics about the fitted model
 
     """
-    #read in data
-    dirname = os.path.dirname(__file__)
-    filename_data = os.path.join(dirname, 'data/scratch_data.csv')
-    data = pd.read_csv(filename_data)
-
+    
     #replacing dashes with underscores
     data.columns = [i.replace('-', '_') for i in data.columns]
-    data_use = data.drop(columns=['p_ID','project-name','username'])
+    data_use = data.drop(columns=['p_ID','project_name','username'])
     
     labels = np.array(data_use[['total_remixes','total_views', 'total_favorites', 'total_loves']])
     features = data_use.drop(columns=['total_remixes', 'total_views', 'total_favorites', 'total_loves'])
@@ -58,7 +54,7 @@ def fit_model(data):
     baseline_predictions = ([test_labels[0].mean(), test_labels[1].mean(), test_labels[2].mean(),
                              test_labels[3].mean()])
     baseline_errors = abs(baseline_predictions - test_labels)
-    predictions = rf.predict(test_features)
+    predictions = model.predict(test_features)
     errors = abs(predictions - test_labels)
     observations = test_features.shape[0]
     
@@ -83,6 +79,7 @@ def export_files(model, feature_list, diagnostics):
     -------
     None; writes files to disk
     """
+
     dirname = os.path.dirname(__file__)
     filename_model = os.path.join(dirname, 'exports/fitted_model.sav')
     filename_features = os.path.join(dirname, 'exports/feature_list.sav')
@@ -90,3 +87,10 @@ def export_files(model, feature_list, diagnostics):
     joblib.dump(model, filename_model)
     joblib.dump(feature_list, filename_features)
     joblib.dump(diagnostics, filename_diagnostics)
+
+#read in data
+dirname = os.path.dirname(__file__)
+filename_data = os.path.join(dirname, 'data/scratch_sample.csv')
+data = pd.read_csv(filename_data)
+model, feature_list, diagnostics = fit_model(data)
+export_files(model, feature_list, diagnostics)
