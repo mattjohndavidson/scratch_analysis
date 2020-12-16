@@ -30,6 +30,7 @@ def fit_model(data):
     """
     
     #replacing dashes with underscores
+    data = data.dropna()
     data.columns = [i.replace('-', '_') for i in data.columns]
     data_use = data.drop(columns=['p_ID','project_name','username'])
     
@@ -89,7 +90,7 @@ def export_files(model, feature_list, diagnostics):
     joblib.dump(diagnostics, filename_diagnostics)
 
 #read in data
-filename_data = os.path.join('scratch_explorer/data/scratch_sample.csv')
+filename_data = os.path.join('scratch_explorer/data/scratch_data.csv')
 data = pd.read_csv(filename_data)
 model, feature_list, diagnostics = fit_model(data)
 export_files(model, feature_list, diagnostics)
