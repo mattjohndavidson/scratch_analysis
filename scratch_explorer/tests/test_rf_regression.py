@@ -2,6 +2,7 @@ import os
 import unittest
 import pandas as pd
 import numpy as np
+from unittest.mock import Mock, patch
 from scratch_explorer import model_fit
 
 """
@@ -34,26 +35,13 @@ class test_rf_regression(unittest.TestCase):
             
     def test_file_export(self):
         """
-        Test that module writes files
+        Test that export module is called
+
+        Checks that inputs were correct
         """
-        filename_model = os.path.join('scratch_explorer/exports/fitted_model.sav')
-        filename_features = os.path.join('scratch_explorer/exports/feature_list.sav')
-        filename_diagnostics = os.path.join('scratch_explorer/exports/diagnostics.sav')
-        
-        print(filename_model)
-        self.data = self.data_modeling
 
-        model, feature_list, diagnostics = model_fit.fit_model(self.data)
-        model_fit.export_files(model, feature_list, diagnostics)
-
-        self.assertTrue(os.path.isfile(filename_model),
-        'model object not written to disk')
-        #check that model exists
-
-        self.assertTrue(os.path.isfile(filename_features),
-        'features list not written to disk')
-        #check that features list exist
-
-        self.assertTrue(os.path.isfile(filename_diagnostics),
-        'model diagnostics not written to disk')
-        #check that diagnostics file exists
+        with patch('scratch_explorer.model_fit.export_files') as export_call, \
+            patch('scratch_explorer.model_fit.fit_model') as fit_call:
+            fit_call.return_value = ['model', 'feature_list', 'diagnostics']
+            model_fit.main()
+            export_call.assert_called_once_with('model', 'feature_list', 'diagnostics')
