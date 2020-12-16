@@ -4,7 +4,6 @@ import joblib
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.multioutput import MultiOutputRegressor
 from sklearn.model_selection import train_test_split
-import clean_data
 import os
 
 def fit_model(data):
@@ -29,11 +28,15 @@ def fit_model(data):
     diagnostics: various diagnostics about the fitted model
 
     """
-    #clean and format data
-    data_clean = clean_data.clean_columns(data)
-    data_clean_flat = clean_data.flatten_data(data_clean)
-    data_use = data_clean_flat.drop(columns=['project_ID','script_ID','project_name','block_rank','block_type'])
+    #read in data
+    dirname = os.path.dirname(__file__)
+    filename_data = os.path.join(dirname, 'data/scratch_data.csv')
+    data = pd.read_csv(filename_data)
 
+    #replacing dashes with underscores
+    data.columns = [i.replace('-', '_') for i in data.columns]
+    data_use = data.drop(columns=['p_ID','project-name','username'])
+    
     labels = np.array(data_use[['total_remixes','total_views', 'total_favorites', 'total_loves']])
     features = data_use.drop(columns=['total_remixes', 'total_views', 'total_favorites', 'total_loves'])
     feature_list = list(features.columns)
