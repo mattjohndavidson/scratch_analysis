@@ -122,15 +122,14 @@ class test_save_data(unittest.TestCase):
     def test_main3(self, os_path_exists_mock, input_mock):
         """Output file already exists. Tests both responses."""
         os_path_exists_mock.side_effect = [True, True, False]
+        input_mock.side_effect = ['d', 'n', 'y']
         with unittest.mock.patch('sys.argv',
                                  ['save_data.py', 'metadata.csv',
                                   'code.csv','output.csv']):
             with self.assertRaises(SystemExit):
-                input_mock.side_effect = ['d', 'n']
                 save_data.main()
             with patch('scratch_explorer.save_data.get_data') as get_data_call, \
                  patch('pandas.DataFrame.to_csv') as to_csv_call:
-                input_mock.return_value = 'y'
                 get_data_call.return_value = pd.DataFrame()
                 to_csv_call.side_effect = (lambda x: None)
                 save_data.main()

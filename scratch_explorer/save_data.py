@@ -87,10 +87,10 @@ def main():
             while need_input:
                 ans = input('File {} already exists. Do you want to overwrite (y/n)?'.format(file_out_path))
                 if ans == 'n':
-                    need_input == False
+                    need_input = False
                     sys.exit(0)
                 elif ans == 'y':
-                    need_input == False
+                    need_input = False
                 else:
                     pass
 
