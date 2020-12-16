@@ -9,7 +9,7 @@ A series of unit tests for the RandomForest Regression module
 """
 
 
-#class test_rf_regression(unittest.TestCase):
+class test_rf_regression(unittest.TestCase):
     
     def setUp(self):
         # getting paths to data file
