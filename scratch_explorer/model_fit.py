@@ -89,8 +89,7 @@ def export_files(model, feature_list, diagnostics):
     joblib.dump(diagnostics, filename_diagnostics)
 
 #read in data
-dirname = os.path.dirname(__file__)
-filename_data = os.path.join(dirname, 'data/scratch_data.csv')
+filename_data = os.path.join('scratch_explorer/data/scratch_sample.csv')
 data = pd.read_csv(filename_data)
 model, feature_list, diagnostics = fit_model(data)
 export_files(model, feature_list, diagnostics)
