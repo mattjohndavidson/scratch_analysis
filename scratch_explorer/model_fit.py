@@ -89,8 +89,17 @@ def export_files(model, feature_list, diagnostics):
     joblib.dump(feature_list, filename_features)
     joblib.dump(diagnostics, filename_diagnostics)
 
-#read in data
-filename_data = os.path.join('scratch_explorer/data/scratch_data.csv')
-data = pd.read_csv(filename_data)
-model, feature_list, diagnostics = fit_model(data)
-export_files(model, feature_list, diagnostics)
+def main(): 
+    """
+    Runs model fit module with full dataset
+
+    example usage in terminal from root dir of repo: 
+    python scratch_explorer/model_fit.py
+    """
+    filename_data = os.path.join('scratch_explorer/data/scratch_data.csv')
+    data = pd.read_csv(filename_data)
+    model, feature_list, diagnostics = fit_model(data)
+    export_files(model, feature_list, diagnostics)
+
+if __name__== "__main__":
+    main()
