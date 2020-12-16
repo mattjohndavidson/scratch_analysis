@@ -117,25 +117,25 @@ class test_save_data(unittest.TestCase):
                 save_data.main()
 
 
-#     @patch('builtins.input')
-#     @patch('os.path.exists')
-#     def test_main3(self, os_path_exists_mock, input_mock):
-#         """Output file already exists. Tests both responses."""
-#         os_path_exists_mock.side_effect = [True, False, False]
-#         with unittest.mock.patch('sys.argv',
-#                                  ['save_data.py', 'metadata.csv',
-#                                   'code.csv','output.csv']):
-#             with self.assertRaises(SystemExit):
-#                 input_mock.return_value = 'n'
-#                 save_data.main()
-#             with patch('scratch_explorer.save_data.get_data') as get_data_call, \
-#                  patch('pandas.DataFrame.to_csv') as to_csv_call:
-#                 input_mock.return_value = 'y'
-#                 get_data_call.return_value = pd.DataFrame
-#                 to_csv_call.return_value = None
-#                 save_data.main()
-#                 get_data_call.assert_called_once_with('metadata.csv', 'code.csv')
-#                 to_csv_call.assert_called_once_with('output.csv')
+    @patch('builtins.input')
+    @patch('os.path.exists')
+    def test_main3(self, os_path_exists_mock, input_mock):
+        """Output file already exists. Tests both responses."""
+        os_path_exists_mock.side_effect = [True, False, False]
+        with unittest.mock.patch('sys.argv',
+                                 ['save_data.py', 'metadata.csv',
+                                  'code.csv','output.csv']):
+            with self.assertRaises(SystemExit):
+                input_mock.side_effect = ['d', 'n']
+                save_data.main()
+            with patch('scratch_explorer.save_data.get_data') as get_data_call, \
+                 patch('pandas.DataFrame.to_csv') as to_csv_call:
+                input_mock.return_value = 'y'
+                get_data_call.return_value = pd.DataFrame()
+                to_csv_call.side_effect = (lambda x: None)
+                save_data.main()
+                get_data_call.assert_called_once_with('metadata.csv', 'code.csv')
+                to_csv_call.assert_called_once_with('output.csv')
 
 
 if __name__ == '__main__':
