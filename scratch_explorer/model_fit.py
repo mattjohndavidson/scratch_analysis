@@ -90,7 +90,7 @@ def export_files(model, feature_list, diagnostics):
 
 #read in data
 dirname = os.path.dirname(__file__)
-filename_data = os.path.join(dirname, 'data/scratch_sample.csv')
+filename_data = os.path.join(dirname, 'data/scratch_data.csv')
 data = pd.read_csv(filename_data)
 model, feature_list, diagnostics = fit_model(data)
 export_files(model, feature_list, diagnostics)
