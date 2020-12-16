@@ -13,11 +13,18 @@ import pandas as pd
 import numpy as np
 
 
-def save_data(local_path_meta, local_path_code, file_out_path):
+def get_data(local_path_meta, local_path_code):
     """
     Creates scratch_data.csv
+    
+    Params: 
+        local_path_meta: csv file path where metadata.csv is saved
+        local_path_code: csv file path where code.csv is saved
+    
+    Returns:
+        merged: pandas DataFrame to be used with scratch_explorer
     """
-    paths = [local_path_meta, local_path_code, file_out_path]
+    paths = [local_path_meta, local_path_code]
     if not all(path.endswith('.csv') for path in paths):
         raise ValueError('Files must be csv files.')
     
@@ -56,11 +63,11 @@ def save_data(local_path_meta, local_path_code, file_out_path):
 
     merged = metadata[metadata_columns].merge(right=projects[projects_columns],
                                               how='inner', on='p_ID')
-    merged.to_csv(file_out_path)
+    return merged
 
 
 def main():
-    """Runs save_data().
+    """Runs get_data() and saves to user-defined location.
     
     My example usage:
         python save_data.py /Users/jacobcohen/Downloads/metadata.csv \
@@ -72,20 +79,23 @@ def main():
         local_path_meta = sys.argv[1]
         local_path_code = sys.argv[2]
         file_out_path = sys.argv[3]
-
+        paths = [local_path_meta, local_path_code, file_out_path]
+        if not all(path.endswith('.csv') for path in paths):
+            raise ValueError('All paths must be csv file paths.')
         if op.exists(file_out_path):
             need_input = True
             while need_input:
                 ans = input('File {} already exists. Do you want to overwrite (y/n)?'.format(file_out_path))
                 if ans == 'n':
-                    need_input == False
+                    need_input = False
                     sys.exit(0)
                 elif ans == 'y':
-                    need_input == False
+                    need_input = False
                 else:
                     pass
 
-        save_data(local_path_meta, local_path_code, file_out_path)
+        to_save = get_data(local_path_meta, local_path_code)
+        to_save.to_csv(file_out_path)
 
 
 if __name__== "__main__":
