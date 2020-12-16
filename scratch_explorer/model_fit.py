@@ -64,7 +64,7 @@ def fit_model(data):
                    'baseline_error': baseline_errors.mean(),
                    'test_error': errors.mean(),
                    'observations': observations}
-    return feature_list, model, diagnostics
+    return model, feature_list, diagnostics
 
 def export_files(model, feature_list, diagnostics):
     """
