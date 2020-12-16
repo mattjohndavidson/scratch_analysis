@@ -121,7 +121,7 @@ class test_save_data(unittest.TestCase):
     @patch('os.path.exists')
     def test_main3(self, os_path_exists_mock, input_mock):
         """Output file already exists. Tests both responses."""
-        os_path_exists_mock.side_effect = [True, False, False]
+        os_path_exists_mock.side_effect = [True, True, False]
         with unittest.mock.patch('sys.argv',
                                  ['save_data.py', 'metadata.csv',
                                   'code.csv','output.csv']):
