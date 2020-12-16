@@ -1,9 +1,10 @@
 # Scratch Explorer
 [![Build Status](https://travis-ci.com/mattjohndavidson/scratch_analysis.svg?branch=main)](https://travis-ci.com/github/mattjohndavidson/scratch_analysis)
 [![Coverage Status](https://coveralls.io/repos/github/mattjohndavidson/scratch_analysis/badge.svg?branch=main)](https://coveralls.io/github/mattjohndavidson/scratch_analysis?branch=main)
-![videogames_48_37](https://user-images.githubusercontent.com/56270805/102248582-29baa580-3eb6-11eb-8b7f-d34037d3ad51.jpg)
 
 ## About Scratch
+<img src="https://user-images.githubusercontent.com/56270805/102248582-29baa580-3eb6-11eb-8b7f-d34037d3ad51.jpg" width="200" align="right">
+
 Scratch is a block-based visual programming language. 
 It was created by the MIT Media Lab to introduce children aged 8-16 to the concepts and logic of coding. 
 The Scratch website is located [here](https://scratch.mit.edu).
@@ -32,19 +33,19 @@ Add video here
 
 ## Installation
 To install and run this explorer :
-1. Install conda.
-2. Clone the repository using: git clone https://github.com/mattjohndavidson/scratch_analysis.git
+1. Install `conda` if it is not already installed.
+2. Clone the repository using the command `git clone https://github.com/mattjohndavidson/scratch_analysis.git`
 3. Create an environment for the app by using: conda env create -f environment.yml
 4. Run the environment using: source activate test_env
 5. ...
-6. Run the website on your local machine by using: python app.py
+6. Run the website on your local machine by using: `python app.py`
 7. ...
 
 
 ## Limitations
 There are some limitiation to this project:
-- Some Scratch projects are no longer available on the website.
-- The app runs locally at the user's machine and is not hosted by cloud server
+- Some Scratch projects are no longer available on the website. Our tool will display an empty project if an unavailable project is selected.
+- The app runs locally on the user's machine and is not hosted by cloud server
 
 
 
@@ -52,13 +53,42 @@ There are some limitiation to this project:
 To be updated
 
 ## Directory Structure
-To be updated
+```
+scratch_analysis/  
+    |- docs/  
+        - scratch_tech_review.pdf 
+        - software_design.md  
+    |- scratch_explorer/  
+        |- data/  
+            - scratch_data.csv  
+            - scratch_sample.csv   
+        |- exports/  
+            - feature_list.sav   
+            - fitted_model.sav   
+        |- tests/   
+            - __init__.py   
+            - test_rf_regression.py   
+            - test_save_data.py   
+            - test_search.py   
+        |- __init__.py   
+        |- clean_data.py   
+        |- combined.py  
+        |- model_fit.py  
+        |- save_data.py  
+        |- search.py  
+    |- .coveragerc  
+    |- .gitignore  
+    |- .travis.yml  
+    |- LICENSE  
+    |- README.md  
+    |- environment.yml 
+```
 
 ## Team Members
-1. Faisal Alsallum
-2. Jacob Cohen
-3. Matt Davidson
-4. Crystal Yu
+- Faisal Alsallum
+- Jacob Cohen
+- Matt Davidson
+- Crystal Yu
 
 ## Project History
 This tool was created for CSE 583, Autumn 2020 at University of Washington.
