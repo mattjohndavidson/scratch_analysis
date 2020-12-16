@@ -57,15 +57,6 @@ class test_search(unittest.TestCase):
 
 
     def test6(self):
-        """not all blocks are block types"""
-        with self.assertRaises(ValueError):
-            data = self.data
-            column = 'block-type'
-            block_search = ['&','not-a-block']
-            search.search_data(data,column,block_search)
-
-
-    def test7(self):
         """Edge test: only search for 1 block type"""
         data = self.data
         column = 'block-type'
@@ -74,7 +65,7 @@ class test_search(unittest.TestCase):
         self.assertEqual(result.iloc[0].p_ID, 99457867)
 
 
-    def test8(self):
+    def test7(self):
         """Edge test: search for 2 block types"""
         data = self.data
         column = 'block-type'
@@ -83,7 +74,7 @@ class test_search(unittest.TestCase):
         self.assertEqual(result.iloc[0].p_ID, 98955356)
 
 
-    def test9(self):
+    def test8(self):
         """Edge test: search for a column"""
         data = self.data
         column = 'Mastery'
