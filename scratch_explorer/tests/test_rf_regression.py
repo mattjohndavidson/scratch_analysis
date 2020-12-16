@@ -26,8 +26,7 @@ class test_rf_regression(unittest.TestCase):
         self.data = self.data_modeling
         model, feature_list, diagnostics = model_fit.fit_model(self.data)
 
-        self.assertIsInstance(model, 'sklearn.multioutput.MultiOutputRegressor', 
-        'model object not multi output regressor')
+        self.assertTrue(model, 'model not created')
         
         self.assertTrue(feature_list, 'feature list not created')
 
@@ -37,11 +36,16 @@ class test_rf_regression(unittest.TestCase):
         """
         Test that module writes files
         """
-        dirname = os.path.dirname(__file__)
-        filename_model = os.path.join(dirname, 'exports/fitted_model.sav')
-        filename_features = os.path.join(dirname, 'exports/feature_list.sav')
-        filename_diagnostics = os.path.join(dirname, 'exports/diagnostics.sav')
+        filename_model = os.path.join('scratch_explorer/exports/fitted_model.sav')
+        filename_features = os.path.join('scratch_explorer/exports/feature_list.sav')
+        filename_diagnostics = os.path.join('scratch_explorer/exports/diagnostics.sav')
         
+        print(filename_model)
+        self.data = self.data_modeling
+
+        model, feature_list, diagnostics = model_fit.fit_model(self.data)
+        model_fit.export_files(model, feature_list, diagnostics)
+
         self.assertTrue(os.path.isfile(filename_model),
         'model object not written to disk')
         #check that model exists
