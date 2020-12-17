@@ -9,7 +9,6 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import plotly.express as px
-import clean_data as cdt
 import search
 import joblib
 
@@ -40,19 +39,39 @@ non_block_columns = np.array(['total-views', 'total-remixes',
 
 block_types = np.setdiff1d(all_search_columns, non_block_columns)
 
+search_textp1 = 'Choose from the search terms in the dropdown box, \
+                 then click "Search" to find the most relevant Scratch project! \
+                 If the project is missing, click the "Update" button below to \
+                 find the next most relevant project.'
+                 
+search_textp2 = 'If you\'d like to search by the types of code blocks a project uses, \
+                 select "Block type" in the dropdown menu, then check as many blocks \
+                 as you wish before clicking "Search."'
+                 
+search_textp3 = 'If you\'d like to learn more about your search result, click the \
+                 "Project source code" link to view the Scratch code. Happy searching!'
+
+pop_textp1 = 'Choose from the popularity metrics in the dropdown box to see the top 10 most \
+              important features that contribute to that score for a Scratch project! If you \
+              are a Scratch creator or a Scratch researcher, use that feature to maximize your \
+              popularity scores.'
+
 # begin app
 app = dash.Dash(__name__)
 app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-family': 'Verdana'},
 
                       children=[
                           # title
-                          html.H1("Scratch Analysis"),
+                          html.H1("Scratch Explorer"),
+                          html.H2('I am a...'),
                           html.Br(),
                           dcc.Tabs([
-                              dcc.Tab(label = "Search Function", children = [
-                                                          html.H2("1.Search for scratch projects that fit your needs!"),
+                          dcc.Tab(label="Teacher", children=[
+                                  html.H2("Search for Scratch projects that fit your needs!"),
 
-                          html.H3('Search metric:'),
+                          html.H3(search_textp1),
+                          html.H3(search_textp2),
+                          html.H3(search_textp3),
 
                           #dropdown menu to choose feature importance graph based on one of 4 labels
                           dcc.Dropdown(
@@ -73,7 +92,7 @@ app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-fami
                                   {'label': 'Data representation', 'value': 'DataRepresentation'},
                                   {'label': 'Mastery', 'value': 'Mastery'},
                                   ],
-                              value='total-blocks'
+                              value='total-views'
                               ),
 
                           dcc.Checklist(id='block-checklist'),
@@ -96,8 +115,10 @@ app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-fami
                               ]),
                           
 
-                          dcc.Tab(label = "popularity metric", children = [
-html.H2("2.See which features were most predictive of the chosen popularity metric"),
+                          dcc.Tab(label="Researcher", children=[
+html.H2("See which features were most predictive of the chosen popularity metric."),
+                          
+                          html.H3(pop_textp1),
 
                           #dropdown menu to choose feature importance graph based on one of 4 labels
                           dcc.Dropdown(
@@ -105,7 +126,7 @@ html.H2("2.See which features were most predictive of the chosen popularity metr
                               options=[
                                   {'label': 'Total remixes', 'value': 0},
                                   {'label': 'Total views', 'value': 1},
-                                  {'label': 'Total favorties', 'value': 2},
+                                  {'label': 'Total favorites', 'value': 2},
                                   {'label': 'Total loves', 'value': 3}
                                   ],
                               value=0
@@ -122,7 +143,7 @@ html.H2("2.See which features were most predictive of the chosen popularity metr
     Output('block-checklist', 'options'),
     Input('search-dropdown', 'value'))
 def set_block_options(selected_search):
-    if selected_search == 'block_type':
+    if selected_search == 'block-type':
         block_options = [{'label': block, 'value': block} for block in block_types]
     else:
         block_options = []
@@ -145,6 +166,8 @@ def update_scratch(search_clicks, update_clicks, input1, input2):
         p_id = sorted_data.iloc[0].p_ID
     elif 'update-button' in clicked_button:
         p_id = sorted_data.iloc[update_clicks].p_ID
+    else:
+        p_id = 99004100
 
     href = 'https://scratch.mit.edu/projects/{}/editor/'.format(p_id)
     src = 'https://scratch.mit.edu/projects/{}/embed'.format(p_id)
@@ -152,11 +175,11 @@ def update_scratch(search_clicks, update_clicks, input1, input2):
     return href, src
 
 
-@app.callback(
-    Output('update-button', 'n_clicks'),
-    Input('search-button', 'n_clicks'))
-def reset_update(n_clicks):
-    return 0
+# @app.callback(
+#     Output('update-button', 'n_clicks'),
+#     Input('search-button', 'n_clicks'))
+# def reset_update(n_clicks):
+#     return 0
 
 
 @app.callback(

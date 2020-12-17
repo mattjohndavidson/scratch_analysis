@@ -56,7 +56,9 @@ def search_data(data, column, block_search=np.array([None])):
             search_term = block_search[0]
         else:
             block_search_sum = sum([data[block] for block in block_search])
-            data.insert(len(data.columns), "search_sum", block_search_sum)
+            if 'search_sum' in data.columns.values:
+                data = data.drop(columns=['search_sum'])
+            data.insert(len(data.columns), 'search_sum', block_search_sum)
             search_term = 'search_sum'
     else:
         search_term = column
