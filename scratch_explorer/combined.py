@@ -173,11 +173,11 @@ def update_scratch(search_clicks, update_clicks, input1, input2):
     return href, src
 
 
-# @app.callback(
-#     Output('update-button', 'n_clicks'),
-#     Input('search-button', 'n_clicks'))
-# def reset_update(n_clicks):
-#     return 0
+@app.callback(
+    Output('update-button', 'n_clicks'),
+    Input('search-button', 'n_clicks'))
+def reset_update(n_clicks):
+    return 0
 
 
 @app.callback(

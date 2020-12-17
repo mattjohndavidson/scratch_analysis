@@ -57,7 +57,7 @@ class test_search(unittest.TestCase):
 
 
     def test6(self):
-        """Edge test: only search for 1 block type"""
+        """One shot test: only search for 1 block type"""
         data = self.data
         column = 'block-type'
         block_search = ['&']
@@ -66,16 +66,18 @@ class test_search(unittest.TestCase):
 
 
     def test7(self):
-        """Edge test: search for 2 block types"""
+        """One shot test: search for 2 block, already been searched"""
         data = self.data
         column = 'block-type'
         block_search = ['&', '+']
+        block_search_sum = sum([data[block] for block in block_search])
+        data.insert(len(data.columns), 'search_sum', block_search_sum)
         result = search.search_data(data,column,block_search)
         self.assertEqual(result.iloc[0].p_ID, 98955356)
 
 
     def test8(self):
-        """Edge test: search for a column"""
+        """One shot test: search for a column"""
         data = self.data
         column = 'Mastery'
         block_search = None

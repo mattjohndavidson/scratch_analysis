@@ -2,7 +2,7 @@ import os
 import unittest
 import pandas as pd
 import numpy as np
-from unittest.mock import Mock, patch
+from unittest.mock import MagicMock, Mock, patch
 from scratch_explorer import model_fit
 
 """
@@ -32,16 +32,27 @@ class test_rf_regression(unittest.TestCase):
         self.assertTrue(feature_list, 'feature list not created')
 
         self.assertTrue(diagnostics, 'diagnostics not created')
-            
-    def test_file_export(self):
+
+
+    @patch('joblib.dump')
+    @patch('pandas.read_csv')
+    @patch('numpy.c_')
+    @patch('scratch_explorer.model_fit.fit_model')
+    def test_file_export(self, fit_mock, npc_mock, read_csv_mock, dump_mock):
         """
         Test that export module is called
 
         Checks that inputs were correct
         """
-
-        with patch('scratch_explorer.model_fit.export_files') as export_call, \
-            patch('scratch_explorer.model_fit.fit_model') as fit_call:
-            fit_call.return_value = ['model', 'feature_list', 'diagnostics']
+        model = MagicMock()
+        feature_list = MagicMock()
+        npc_mock.return_value = MagicMock()
+        read_csv_mock.return_value = ''
+        fit_mock.return_value = [model, feature_list, 'diagnostics']
+        dump_mock.side_effect = lambda x, y: None
+        
+        with patch('pandas.DataFrame') as df_mock:
+            df_mock.return_value = MagicMock()
             model_fit.main()
-            export_call.assert_called_once_with('model', 'feature_list', 'diagnostics')
+        
+        dump_mock.assert_called()
