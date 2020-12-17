@@ -12,8 +12,6 @@ import plotly.express as px
 import search
 import joblib
 
-
-
 # Load the data
 file_name = 'data/scratch_data.csv'
 data = pd.read_csv(file_name, low_memory=False).drop(columns=['Unnamed: 0'])
@@ -124,12 +122,12 @@ html.H2("See which features were most predictive of the chosen popularity metric
                           dcc.Dropdown(
                               id='labels-dropdown',
                               options=[
-                                  {'label': 'Total remixes', 'value': 0},
-                                  {'label': 'Total views', 'value': 1},
-                                  {'label': 'Total favorites', 'value': 2},
-                                  {'label': 'Total loves', 'value': 3}
+                                  {'label': 'Total remixes', 'value': 'Remixes'},
+                                  {'label': 'Total views', 'value': 'Views'},
+                                  {'label': 'Total favorites', 'value': 'Favorites'},
+                                  {'label': 'Total loves', 'value': 'Loves'}
                                   ],
-                              value=0
+                              value='Remixes'
                               ),
 
                           dcc.Graph(id='figure_importances')
@@ -186,11 +184,9 @@ def update_scratch(search_clicks, update_clicks, input1, input2):
     Output('figure_importances', 'figure'),
     [Input('labels-dropdown', 'value')])
 def update_graph(outcome):
-    feature_imps = pd.DataFrame(model.estimators_[outcome].feature_importances_,
-                                columns=["Importance"], index=feature_list)
-    feature_imps = feature_imps.sort_values("Importance", ascending=False)
-
-    fig = px.bar(x=feature_imps["Importance"][:10], y=feature_imps.index[:10], orientation='h',
+    feature_imps = model
+    feature_imps = feature_imps.sort_values(by = outcome, ascending=False)
+    fig = px.bar(x=feature_imps[outcome][:10], y=feature_imps.index[:10], orientation='h',
                  range_x=(0, .25),
                  labels={
                      'x' : 'Feature Importance',
@@ -200,4 +196,4 @@ def update_graph(outcome):
     return fig
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug = True)
