@@ -80,12 +80,16 @@ def export_files(model, feature_list, diagnostics):
     -------
     None; writes files to disk
     """
-
+    feature_imps = pd.DataFrame(columns=["Importance"], index=feature_list)
+    for i in range(3):
+        feature_imps[i] = model.estimators_[i].feature_importances_
+    feature_imps = feature_imps.sort_values("Importance", ascending=False)
+    model_features = feature_imps.index[:10]
     dirname = os.path.dirname(__file__)
     filename_model = os.path.join(dirname, 'exports/fitted_model.sav')
     filename_features = os.path.join(dirname, 'exports/feature_list.sav')
     filename_diagnostics = os.path.join(dirname, 'exports/diagnostics.sav')
-    joblib.dump(model, filename_model)
+    joblib.dump(model_features, filename_model)
     joblib.dump(feature_list, filename_features)
     joblib.dump(diagnostics, filename_diagnostics)
 
