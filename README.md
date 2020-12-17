@@ -29,7 +29,7 @@ Our tool allows users to search through the Scratch dataset to locate relevant p
 Our tool also analyzes the dataset to determine the top ten features popular projects usually contain. The results, along with each feature's importance, are visually displayed.
 
 ## Demonstration
-Add video here
+A short demonstration of our tool can be viewed [here](http://drive.google.com/file/d/1xh6TLoic58Rz-l4hmYblKrTFAwpLDTlS/view)
 
 ## Installation and setup
 To install and run this explorer:
@@ -53,14 +53,16 @@ To be updated with more information about the data
 ## Directory Structure
 ```
 scratch_analysis/  
-    |- docs/  
+    |- docs/
+        |- scratch_explorer_final.pdf        
         |- scratch_tech_review.pdf 
         |- software_design.md  
     |- scratch_explorer/  
         |- data/  
             |- scratch_data.csv  
             |- scratch_sample.csv   
-        |- exports/  
+        |- exports/
+            |- diagnostics.sav  
             |- feature_list.sav   
             |- fitted_model.sav   
         |- tests/   
@@ -69,7 +71,6 @@ scratch_analysis/
             |- test_save_data.py   
             |- test_search.py   
         |- __init__.py   
-        |- clean_data.py   
         |- combined.py  
         |- model_fit.py  
         |- save_data.py  
