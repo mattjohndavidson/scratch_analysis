@@ -31,45 +31,43 @@ Our tool also analyzes the dataset to determine the top ten features popular pro
 ## Demonstration
 Add video here
 
-## Installation
-To install and run this explorer :
+## Installation and setup
+To install and run this explorer:
 1. Install `conda` if it is not already installed.
 2. Clone the repository using the command `git clone https://github.com/mattjohndavidson/scratch_analysis.git`
-3. Create an environment for the app by using: conda env create -f environment.yml
-4. Run the environment using: source activate test_env
-5. ...
-6. Run the website on your local machine by using: `python app.py`
-7. ...
+3. Create an environment for the app by using: `conda env create -f environment.yml`
+4. Run the environment using: `conda activate test_env`
+5. Change the working directory using: `cd scratch_explorer`
+6. Run the app on your machine by using: `python combined.py`
+7. Happy exploring!
 
 
 ## Limitations
-There are some limitiation to this project:
+There are some limitations to this project:
 - Some Scratch projects are no longer available on the website. Our tool will display an empty project if an unavailable project is selected.
 - The app runs locally on the user's machine and is not hosted by cloud server
 
-
-
 ## Notes
-To be updated
+To be updated with more information about the data
 
 ## Directory Structure
 ```
 scratch_analysis/  
     |- docs/  
-        - scratch_tech_review.pdf 
-        - software_design.md  
+        |- scratch_tech_review.pdf 
+        |- software_design.md  
     |- scratch_explorer/  
         |- data/  
-            - scratch_data.csv  
-            - scratch_sample.csv   
+            |- scratch_data.csv  
+            |- scratch_sample.csv   
         |- exports/  
-            - feature_list.sav   
-            - fitted_model.sav   
+            |- feature_list.sav   
+            |- fitted_model.sav   
         |- tests/   
-            - __init__.py   
-            - test_rf_regression.py   
-            - test_save_data.py   
-            - test_search.py   
+            |- __init__.py   
+            |- test_rf_regression.py   
+            |- test_save_data.py   
+            |- test_search.py   
         |- __init__.py   
         |- clean_data.py   
         |- combined.py  
