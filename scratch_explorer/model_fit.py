@@ -86,7 +86,6 @@ def export_files(model, feature_list, diagnostics):
     model_features = pd.DataFrame(feature_imps, 
                                   columns = ['Remixes', 'Views', 'Favorites', 'Loves'],
                                   index = feature_list)
-    print(model_features.sort_values(by = 'Remixes', ascending = False)['Remixes'][:10])
     dirname = os.path.dirname(__file__)
     filename_model = os.path.join(dirname, 'exports/fitted_model.sav')
     filename_features = os.path.join(dirname, 'exports/feature_list.sav')
@@ -102,7 +101,7 @@ def main():
     example usage in terminal from root dir of repo: 
     python scratch_explorer/model_fit.py
     """
-    filename_data = os.path.join('scratch_explorer/data/scratch_sample.csv')
+    filename_data = os.path.join('scratch_explorer/data/scratch_data.csv')
     data = pd.read_csv(filename_data)
     model, feature_list, diagnostics = fit_model(data)
     export_files(model, feature_list, diagnostics)
