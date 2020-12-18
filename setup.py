@@ -6,7 +6,7 @@ setup(
     author='Jacob Cohen, Matt Davidson, Crystal Yu, and Faisal Alsallum',
     packages=find_packages(include=['scratch_explorer']),
     package_data={'scratch_explorer/data': ['*.csv'], 
-                  'scratch_explorer/exports': ['exports/*.sav']},
+                  'scratch_explorer/exports': ['*.sav']},
     install_requires=[
         'dash=1.17.0',
         'numpy=1.19.2',
