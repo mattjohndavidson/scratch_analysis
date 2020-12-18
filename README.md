@@ -16,7 +16,7 @@ Additional information about the scraped dataset can be found in this paper [her
 ## About Scratch Explorer
 We provide this tool to help interested users explore this large database. 
 Using this tool, users are able to search the database of Scratch projects to locate and view existing projects.
-They are also able to explore which coding features are important in popular projects.
+They are also able to explore which coding features are important in popular Scratch projects.
 
 ### Example Users
 1. A middle school CS teacher is looking for examples of Scratch projects that illustrate various programming aspects well to show as an example in class. She doesn’t want to search through individual projects and assess each one to find suitable projects. She would like to use a simple search function to find potential projects.
@@ -24,12 +24,12 @@ They are also able to explore which coding features are important in popular pro
 2. A researcher has found the scraped Scratch project repository and wants to use it to understand what kinds of Scratch projects get the most views, favorites, loves, or remixes. However, the data file is too large to be opened in Excel, and he doesn’t have any experience using other tools like Python to examine the data. He would like to see what features are important in popular Scratch projects.
 
 
-Our tool allows users to search through the Scratch dataset to locate relevant projects. If the project is still hosted on Scratch, the project is directly displayed and can be viewed within our tool. The source code for the project is also linked. 
+Our tool allows users to search through the Scratch dataset to locate relevant projects. If the project is still hosted on Scratch, the project is directly displayed and can be viewed within our tool. The source code for the selected project is also linked. 
 
-Our tool also analyzes the dataset to determine the top ten features popular projects usually contain. The results, along with each feature's importance, are visually displayed.
+Our tool also analyzes the dataset to determine the top ten features popular Scratch projects usually contain. The results, along with each feature's importance, are visually displayed.
 
 ## Demonstration
-A short demonstration of our tool can be viewed [here](http://drive.google.com/file/d/1xh6TLoic58Rz-l4hmYblKrTFAwpLDTlS/view)
+A short demonstration of our tool can be viewed [here](http://drive.google.com/file/d/1xh6TLoic58Rz-l4hmYblKrTFAwpLDTlS/view).
 
 ## Installation and setup
 To install and run this explorer:
@@ -44,16 +44,16 @@ To install and run this explorer:
 
 ## Limitations
 There are some limitations to this project:
-- Some Scratch projects are no longer available on the website. Our tool will display an empty project if an unavailable project is selected.
+- Some Scratch projects are no longer available on the website, and our tool will display an empty project if an unavailable project is selected
 - The app runs locally on the user's machine and is not hosted by cloud server
-
-## Notes
-To be updated with more information about the data
+- Scratch projects that employ custom, user-created blocks are not included in our tool
 
 ## Directory Structure
 ```
 scratch_analysis/  
     |- docs/
+        |- component_design.md
+        |- functional_design.md
         |- scratch_explorer_final.pdf        
         |- scratch_tech_review.pdf 
         |- software_design.md  
