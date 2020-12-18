@@ -29,7 +29,7 @@ Our tool allows users to search through the Scratch dataset to locate relevant p
 Our tool also analyzes the dataset to determine the top ten features popular Scratch projects usually contain. The results, along with each feature's importance, are visually displayed.
 
 ## Demonstration
-A short demonstration of our tool can be viewed [here](http://drive.google.com/file/d/1xh6TLoic58Rz-l4hmYblKrTFAwpLDTlS/view).
+A short demonstration of our tool can be viewed [here](https://github.com/mattjohndavidson/scratch_analysis/blob/main/example/demo.mp4).
 
 ## Installation and setup
 To install and run this explorer:
@@ -57,6 +57,8 @@ scratch_analysis/
         |- scratch_explorer_final.pdf        
         |- scratch_tech_review.pdf 
         |- software_design.md  
+    |- example/  
+        |- demo.mp4
     |- scratch_explorer/  
         |- data/  
             |- scratch_data.csv  
