@@ -3,6 +3,7 @@
 import numpy as np
 import pandas as pd
 
+
 def search_data(data, column, block_search=np.array([None])):
     """Searches cleaned dataframe based on the column input by the user.
 
@@ -45,13 +46,15 @@ def search_data(data, column, block_search=np.array([None])):
 
     BLOCK_TYPES = np.setdiff1d(ALL_SEARCH_COLUMNS, NON_BLOCK_COLUMNS)
 
+    err1 = 'Bad input. To search by block type, input a block type to search.'
+    err2 = 'Bad input. Must search by valid block type values.'
     if column not in NON_BLOCK_COLUMNS:
         raise ValueError('Bad input. Column must be a search parameter.')
     elif column == 'block-type':
         if block_search is None or len(block_search) == 0:
-            raise ValueError('Bad input. To search by block type, input a block type to search.')
+            raise ValueError(err1)
         elif not all(block in BLOCK_TYPES for block in block_search):
-            raise ValueError('Bad input. Must search by valid block type values.')
+            raise ValueError(err2)
         elif len(block_search) == 1:
             search_term = block_search[0]
         else:

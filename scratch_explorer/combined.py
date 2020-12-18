@@ -38,25 +38,30 @@ non_block_columns = np.array(['total-views', 'total-remixes',
 block_types = np.setdiff1d(all_search_columns, non_block_columns)
 
 search_textp1 = 'Choose from the search terms in the dropdown box, \
-                 then click "Search" to find the most relevant Scratch project! \
-                 If the project is missing, click the "Update" button below to \
-                 find the next most relevant project.'
-                 
-search_textp2 = 'If you\'d like to search by the types of code blocks a project uses, \
-                 select "Block type" in the dropdown menu, then check as many blocks \
-                 as you wish before clicking "Search."'
-                 
-search_textp3 = 'If you\'d like to learn more about your search result, click the \
-                 "Project source code" link to view the Scratch code. Happy searching!'
+                 then click "Search" to find the most relevant Scratch \
+                 project! If the project is missing, click the "Update" \
+                 button below to find the next most relevant project.'
 
-pop_textp1 = 'Choose from the popularity metrics in the dropdown box to see the top 10 most \
-              important features that contribute to that score for a Scratch project! If you \
-              are a Scratch creator or a Scratch researcher, use that feature to maximize your \
+search_textp2 = 'If you\'d like to search by the types of code blocks \
+                 a project uses, select "Block type" in the dropdown \
+                 menu, then check as many blocks \
+                 as you wish before clicking "Search."'
+
+search_textp3 = 'If you\'d like to learn more about your search result, \
+                 click the "Project source code" link to view the Scratch \
+                 code. Happy searching!'
+
+pop_textp1 = 'Choose from the popularity metrics in the dropdown box to \
+              see the top 10 most important features that contribute to \
+              that score for a Scratch project! If you are a Scratch creator \
+              or a Scratch researcher, use that feature to maximize your \
               popularity scores.'
 
 # begin app
 app = dash.Dash(__name__)
-app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-family': 'Verdana'},
+app.layout = html.Div(style={'textAlign': 'center',
+                             'width': '800px',
+                             'font-family': 'Verdana'},
 
                       children=[
                           # title
@@ -71,62 +76,85 @@ app.layout = html.Div(style={'textAlign': 'center', 'width': '800px', 'font-fami
                           html.H3(search_textp2),
                           html.H3(search_textp3),
 
-                          #dropdown menu to choose feature importance graph based on one of 4 labels
+                          # dropdown menu to choose feature importance graph based on one of 4 labels
                           dcc.Dropdown(
                               id='search-dropdown',
                               options=[
-                                  {'label': 'Total blocks', 'value': 'total-blocks'},
-                                  {'label': 'Total remixes', 'value': 'total-remixes'},
-                                  {'label': 'Total views', 'value': 'total-views'},
-                                  {'label': 'Total favorites', 'value': 'total-favorites'},
-                                  {'label': 'Total loves', 'value': 'total-loves'},
-                                  {'label': 'Block type', 'value': 'block-type'},
-                                  {'label': 'Abstraction', 'value': 'Abstraction'},
-                                  {'label': 'Parallelism', 'value': 'Parallelism'},
-                                  {'label': 'Logic', 'value': 'Logic'},
-                                  {'label': 'Synchronization', 'value': 'Synchronization'},
-                                  {'label': 'Flow control', 'value': 'FlowControl'},
-                                  {'label': 'User interactivity', 'value': 'UserInteractivity'},
-                                  {'label': 'Data representation', 'value': 'DataRepresentation'},
-                                  {'label': 'Mastery', 'value': 'Mastery'},
-                                  ],
+                                  {'label': 'Total blocks',
+                                   'value': 'total-blocks'},
+                                  {'label': 'Total remixes',
+                                   'value': 'total-remixes'},
+                                  {'label': 'Total views',
+                                   'value': 'total-views'},
+                                  {'label': 'Total favorites',
+                                   'value': 'total-favorites'},
+                                  {'label': 'Total loves',
+                                   'value': 'total-loves'},
+                                  {'label': 'Block type',
+                                   'value': 'block-type'},
+                                  {'label': 'Abstraction',
+                                   'value': 'Abstraction'},
+                                  {'label': 'Parallelism',
+                                   'value': 'Parallelism'},
+                                  {'label': 'Logic',
+                                   'value': 'Logic'},
+                                  {'label': 'Synchronization',
+                                   'value': 'Synchronization'},
+                                  {'label': 'Flow control',
+                                   'value': 'FlowControl'},
+                                  {'label': 'User interactivity',
+                                   'value': 'UserInteractivity'},
+                                  {'label': 'Data representation',
+                                   'value': 'DataRepresentation'},
+                                  {'label': 'Mastery',
+                                   'value': 'Mastery'}],
                               value='total-views'
                               ),
 
                           dcc.Checklist(id='block-checklist'),
 
-                          html.Button(id='search-button', n_clicks=0, children='Search'),
+                          html.Button(id='search-button',
+                                      n_clicks=0,
+                                      children='Search'),
 
                           html.Hr(),
 
                           html.H3('Search result:'),
 
-                          html.A(id='output-url', children='Project source code', target='_blank'),
+                          html.A(id='output-url',
+                                 children='Project source code',
+                                 target='_blank'),
 
                           html.Iframe(
                               id='scratch',
-                              style={'border': 'none', 'width': '100%', 'height': 500},
+                              style={'border': 'none',
+                                     'width': '100%',
+                                     'height': 500},
                               src='https://scratch.mit.edu/projects/98698671/embed'
                               ),
 
-                          html.Button(id='update-button', n_clicks=0, children='Update')
+                          html.Button(id='update-button',
+                                      n_clicks=0,
+                                      children='Update')
                               ]),
-                          
+
 
                           dcc.Tab(label="Researcher", children=[
 html.H2("See which features were most predictive of the chosen popularity metric."),
                           
                           html.H3(pop_textp1),
 
-                          #dropdown menu to choose feature importance graph based on one of 4 labels
                           dcc.Dropdown(
                               id='labels-dropdown',
                               options=[
-                                  {'label': 'Total remixes', 'value': 'Remixes'},
-                                  {'label': 'Total views', 'value': 'Views'},
-                                  {'label': 'Total favorites', 'value': 'Favorites'},
-                                  {'label': 'Total loves', 'value': 'Loves'}
-                                  ],
+                                  {'label': 'Total remixes',
+                                   'value': 'Remixes'},
+                                  {'label': 'Total views',
+                                   'value': 'Views'},
+                                  {'label': 'Total favorites',
+                                   'value': 'Favorites'},
+                                  {'label': 'Total loves',
+                                   'value': 'Loves'}],
                               value='Remixes'
                               ),
 
@@ -189,11 +217,11 @@ def update_graph(outcome):
     fig = px.bar(x=feature_imps[outcome][:10], y=feature_imps.index[:10], orientation='h',
                  range_x=(0, .25),
                  labels={
-                     'x' : 'Feature Importance',
-                     'y' : 'Feature Name'
+                     'x':'Feature Importance',
+                     'y':'Feature Name'
                  })
     fig.update_layout(yaxis={'categoryorder':'total ascending'})
     return fig
 
 if __name__ == '__main__':
-    app.run_server(debug = True)
+    app.run_server(debug=True)

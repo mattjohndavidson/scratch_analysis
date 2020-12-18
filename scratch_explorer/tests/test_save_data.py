@@ -1,8 +1,11 @@
+"""Tests the save_data.py module"""
+
 import unittest
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 import pandas as pd
 import numpy as np
 from scratch_explorer import save_data
+
 
 class test_save_data(unittest.TestCase):
     """Includes unit tests for save_data.py"""
@@ -12,12 +15,15 @@ class test_save_data(unittest.TestCase):
         np.random.seed(0)
         test_n = 10
         p_ids = np.random.randint(low=10000001, high=99999999, size=test_n)
-        p_ids_long = np.repeat(p_ids, np.random.randint(low=7, high=16, size=test_n))
-
+        p_ids_long = np.repeat(p_ids, np.random.randint(low=7,
+                                                        high=16,
+                                                        size=test_n))
         test_n_blocks = len(p_ids_long)
         sprite_types = np.random.randint(low=1, high=100, size=test_n_blocks)
         total_blocks = np.random.randint(low=1, high=100, size=test_n_blocks)
-        block_types_ints = np.random.randint(low=10000, high=99999, size=test_n_blocks)
+        block_types_ints = np.random.randint(low=10000,
+                                             high=99999,
+                                             size=test_n_blocks)
         block_types = [str(block) for block in block_types_ints]
 
         cls.ex_code = pd.DataFrame({'p_ID': p_ids_long,
@@ -27,11 +33,11 @@ class test_save_data(unittest.TestCase):
 
         p_ID = p_ids
         project_name = [str(name) for name in np.random.randint(low=10000,
-                                                                 high=99999,
-                                                                 size=test_n)]
+                                                                high=99999,
+                                                                size=test_n)]
         username = [str(name) for name in np.random.randint(low=1000,
-                                                                 high=9999,
-                                                                 size=test_n)]
+                                                            high=9999,
+                                                            size=test_n)]
         total_views = np.random.randint(low=100, high=999, size=test_n)
         total_remixes = np.random.randint(low=100, high=999, size=test_n)
         total_favorites = np.random.randint(low=100, high=999, size=test_n)
@@ -67,12 +73,10 @@ class test_save_data(unittest.TestCase):
                                     'Clones': Clones,
                                     'CustomBlocks': CustomBlocks})
 
-
     def test_save1(self):
         """one input is not a csv file"""
         with self.assertRaises(ValueError):
             save_data.get_data('metadata.csv', 'code')
-
 
     @patch('os.path.exists')
     def test_save2(self, os_path_exists_mock):
@@ -80,15 +84,13 @@ class test_save_data(unittest.TestCase):
         with self.assertRaises(FileNotFoundError):
             os_path_exists_mock.side_effect = [False, True]
             save_data.get_data('metadata.csv', 'code.csv')
-    
-    
+
     @patch('os.path.exists')
     def test_save3(self, os_path_exists_mock):
         """code.csv does not exist"""
         with self.assertRaises(FileNotFoundError):
             os_path_exists_mock.side_effect = [True, False]
             save_data.get_data('metadata.csv', 'code.csv')
-
 
     @patch('pandas.read_csv')
     @patch('os.path.exists')
@@ -97,7 +99,7 @@ class test_save_data(unittest.TestCase):
         os_path_exists_mock.side_effect = [True, True]
         read_csv_mock.side_effect = [self.ex_code, self.ex_meta]
         result = save_data.get_data('metadata.csv', 'code.csv')
-
+        self.assertEqual(len(result.columns.values), 82)
 
     def test_main1(self):
         """only 3 arguments are passed to save_data.py"""
@@ -107,15 +109,13 @@ class test_save_data(unittest.TestCase):
                                       'code.csv']):
                 save_data.main()
 
-
     def test_main2(self):
         """arguments passed to save_data.py are not csv files."""
         with self.assertRaises(ValueError):
             with unittest.mock.patch('sys.argv',
                                      ['save_data.py', 'metadata.csv',
-                                      'code.csv','output']):
+                                      'code.csv', 'output']):
                 save_data.main()
-
 
     @patch('builtins.input')
     @patch('os.path.exists')
@@ -125,15 +125,15 @@ class test_save_data(unittest.TestCase):
         input_mock.side_effect = ['d', 'n', 'y']
         with unittest.mock.patch('sys.argv',
                                  ['save_data.py', 'metadata.csv',
-                                  'code.csv','output.csv']):
+                                  'code.csv', 'output.csv']):
             with self.assertRaises(SystemExit):
                 save_data.main()
-            with patch('scratch_explorer.save_data.get_data') as get_data_call, \
+            with patch('scratch_explorer.save_data.get_data') as get_call, \
                  patch('pandas.DataFrame.to_csv') as to_csv_call:
-                get_data_call.return_value = pd.DataFrame()
+                get_call.return_value = pd.DataFrame()
                 to_csv_call.side_effect = (lambda x: None)
                 save_data.main()
-                get_data_call.assert_called_once_with('metadata.csv', 'code.csv')
+                get_call.assert_called_once_with('metadata.csv', 'code.csv')
                 to_csv_call.assert_called_once_with('output.csv')
 
 
