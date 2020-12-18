@@ -80,7 +80,8 @@ scratch_analysis/
     |- .travis.yml  
     |- LICENSE  
     |- README.md  
-    |- environment.yml 
+    |- environment.yml
+    |- setup.py
 ```
 
 ## Team Members
