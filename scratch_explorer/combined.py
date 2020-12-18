@@ -213,14 +213,14 @@ def reset_update(n_clicks):
     [Input('labels-dropdown', 'value')])
 def update_graph(outcome):
     feature_imps = model
-    feature_imps = feature_imps.sort_values(by = outcome, ascending=False)
+    feature_imps = feature_imps.sort_values(by=outcome, ascending=False)
     fig = px.bar(x=feature_imps[outcome][:10], y=feature_imps.index[:10], orientation='h',
                  range_x=(0, .25),
                  labels={
-                     'x':'Feature Importance',
-                     'y':'Feature Name'
+                     'x': 'Feature Importance',
+                     'y': 'Feature Name'
                  })
-    fig.update_layout(yaxis={'categoryorder':'total ascending'})
+    fig.update_layout(yaxis={'categoryorder': 'total ascending'})
     return fig
 
 if __name__ == '__main__':

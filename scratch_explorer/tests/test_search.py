@@ -39,7 +39,7 @@ class test_search(unittest.TestCase):
         with self.assertRaises(ValueError):
             data = self.data
             column = 'block-type'
-            block_search = [51,31,23]
+            block_search = [51, 31, 23]
             search.search_data(data, column, block_search)
 
     def test5(self):
@@ -75,6 +75,7 @@ class test_search(unittest.TestCase):
         block_search = None
         result = search.search_data(data, column, block_search)
         self.assertEqual(result.iloc[0].p_ID, 98578463)
+
 
 if __name__ == '__main__':
     unittest.main()
