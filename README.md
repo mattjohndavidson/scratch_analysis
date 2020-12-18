@@ -19,9 +19,9 @@ Using this tool, users are able to search the database of Scratch projects to lo
 They are also able to explore which coding features are important in popular Scratch projects.
 
 ### Example Users
-1. A middle school CS teacher is looking for examples of Scratch projects that illustrate various programming aspects well to show as an example in class. She doesn’t want to search through individual projects and assess each one to find suitable projects. She would like to use a simple search function to find potential projects.
+1. A middle school CS teacher is looking for examples of Scratch projects that illustrate various programming aspects well to show as an example in class. He doesn’t want to search through individual projects and assess each one to find suitable projects. He would like to use a simple search function to find potential projects.
 
-2. A researcher has found the scraped Scratch project repository and wants to use it to understand what kinds of Scratch projects get the most views, favorites, loves, or remixes. However, the data file is too large to be opened in Excel, and he doesn’t have any experience using other tools like Python to examine the data. He would like to see what features are important in popular Scratch projects.
+2. A researcher has found the scraped Scratch project repository and wants to use it to understand what kinds of Scratch projects get the most views, favorites, loves, or remixes. However, the data file is too large to be opened in Excel, and she doesn’t have any experience using other tools like Python to examine the data. She would like to see what features are important in popular Scratch projects.
 
 
 Our tool allows users to search through the Scratch dataset to locate relevant projects. If the project is still hosted on Scratch, the project is directly displayed and can be viewed within our tool. The source code for the selected project is also linked. 
@@ -38,7 +38,7 @@ To install and run this explorer:
 3. Create an environment for the app by using: `conda env create -f environment.yml`
 4. Run the environment using: `conda activate test_env`
 5. Change the working directory using: `cd scratch_explorer`
-6. Run the app on your machine by using: `python combined.py`
+6. Run the app on your machine by using: `python explore.py`
 7. Happy exploring!
 
 
@@ -71,7 +71,7 @@ scratch_analysis/
             |- test_save_data.py   
             |- test_search.py   
         |- __init__.py   
-        |- combined.py  
+        |- explore.py  
         |- model_fit.py  
         |- save_data.py  
         |- search.py  
